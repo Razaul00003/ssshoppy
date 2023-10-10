@@ -2,13 +2,13 @@
 <div id="carouselBasicExample" class="carousel slide carousel-fade" data-mdb-ride="carousel">
   <!-- Indicators -->
   <div class="carousel-indicators">
-    {% if section.blocks.size>1 %}
+    {% if section.blocks.size > 1 %}
       {% for block in section.blocks %}
     <button
       type="button"
       data-mdb-target="#carouselBasicExample"
       data-mdb-slide-to="{{foorloop.index}}"
-      {% if forloop.index="=1" %}
+      {% if forloop.index==1 %}
       class="active"
       aria-current="true"  
       aria-label="Slide {{forloop.index}}"
@@ -30,13 +30,18 @@
       {% if block.settings.slider_img !=null %}
         <img class="d-block w-100" src="{{block.settings.slider_img | img_url:'original'}}" alt="{{block.settings.slider_img.alt}}">
       {% endif %}
+        <div class="carousel-caption d-none d-md-block">
+        <h5>First slide label</h5>
+        <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+      </div>
+
       </div>
     {% endfor %}
     
   <!-- Inner -->
 
   <!-- Controls -->
-  {% if section.blocks.size>1 %}
+  {% if section.blocks.size > 1 %}
     <button class="carousel-control-prev" type="button" data-mdb-target="#carouselBasicExample" data-mdb-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Previous</span>
@@ -49,6 +54,8 @@
   
 </div>
 <!-- Carousel wrapper -->
+</div>
+
 {% schema %}
   {
     "name": "Slider",
