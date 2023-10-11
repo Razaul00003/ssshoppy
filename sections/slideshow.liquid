@@ -1,5 +1,5 @@
 <!-- Carousel wrapper -->
-<div id="carouselBasicExample" class="carousel slide carousel-fade" data-mdb-ride="carousel" data-bs-interval="false">
+<div id="carouselBasicExample" class="carousel slide carousel-fade" data-mdb-ride="carousel" data-mdb-interval="{{sections.settings.enable_auto_slide}}"   >
   <!-- Indicators -->
   <div class="carousel-indicators">
     {% if section.blocks.size > 0 %}
@@ -7,7 +7,7 @@
     <button
       type="button"
       data-mdb-target="#carouselBasicExample"
-      data-mdb-slide-to="{{foorloop.index}}"
+      data-mdb-slide-to="{{foorloop.index0}}"
       {% if forloop.index==1 %}
       class="active"
       aria-current="true"  
@@ -26,7 +26,7 @@
   <!-- Inner -->
   <div class="carousel-inner">
    {% for block in section.blocks  %}  
-   <div class="carousel-item {% if forloop.index==1 %}active{%endif %}">
+   <div class="carousel-item {% if forloop.index==1 %}active{%endif %}" data-mdb-interval="4000">
       {% if block.settings.slider_img !=null %}
         <img class="d-block w-100" src="{{block.settings.slider_img | img_url:'original'}}" alt="{{block.settings.slider_img.alt}}">
       {% endif %}
@@ -35,6 +35,11 @@
         <div class="slider-content">
           {{block.settings.rte}}
         </div>
+        {% if block.settings.btn_1 != blank %}
+        <div class="actions">
+          <a href="{{block.settings.btn_url}}" class="btn btn-primary">{{block.settings.btn_1}}</a>
+        </div>
+        {% endif %}
       </div>
 
       </div>
@@ -43,7 +48,7 @@
   <!-- Inner -->
 
   <!-- Controls -->
-  {% if section.blocks.size > 1 %}
+  {% if section.blocks.size > 1 and section.settings.show_prev_next%}
     <button class="carousel-control-prev" type="button" data-mdb-target="#carouselBasicExample" data-mdb-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Previous</span>
@@ -61,7 +66,20 @@
 {% schema %}
   {
     "name": "Slider",
-    "settings":[], 
+    "settings":[
+      {
+        "type": "checkbox",
+        "id": "enable_auto_slide",
+        "label": "Enable auto slide",
+        "default": false
+      }, 
+      {
+        "type": "checkbox",
+        "id": "show_prev_next",
+        "label": "Show Prev and Next icon",
+        "default": true
+      }
+    ], 
     "blocks":[
       {
         "type":"slider",
@@ -84,6 +102,15 @@
             "id":"rte",
             "label":"Details",
             "default": "<p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>"
+          },{
+            "type":"text", 
+            "id":"btn_1",
+            "label":"Buttn label",
+            "default": "Shop Now"
+          },{
+            "type":"url", 
+            "id":"btn_url",
+            "label":"Buttn link"
           }
         ]
       }
