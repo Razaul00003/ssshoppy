@@ -1,8 +1,8 @@
 <!-- Carousel wrapper -->
-<div id="carouselBasicExample" class="carousel slide carousel-fade" data-mdb-ride="carousel">
+<div id="carouselBasicExample" class="carousel slide carousel-fade" data-mdb-ride="carousel" data-bs-interval="false">
   <!-- Indicators -->
   <div class="carousel-indicators">
-    {% if section.blocks.size > 1 %}
+    {% if section.blocks.size > 0 %}
       {% for block in section.blocks %}
     <button
       type="button"
@@ -31,8 +31,10 @@
         <img class="d-block w-100" src="{{block.settings.slider_img | img_url:'original'}}" alt="{{block.settings.slider_img.alt}}">
       {% endif %}
         <div class="carousel-caption d-none d-md-block">
-        <h5>First slide label</h5>
-        <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+        <h5>{{block.settings.title | escape }}</h5>
+        <div class="slider-content">
+          {{block.settings.rte}}
+        </div>
       </div>
 
       </div>
@@ -69,6 +71,19 @@
             "type":"image_picker", 
             "id":"slider_img",
             "label":"Slider image"
+          }, {
+            "type":"header", 
+            "content":"Slider Contents "
+          },{
+            "type":"text", 
+            "id":"title",
+            "label":"Title",
+            "default": "Summer Sale"
+          },{
+            "type":"richtext", 
+            "id":"rte",
+            "label":"Details",
+            "default": "<p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>"
           }
         ]
       }
