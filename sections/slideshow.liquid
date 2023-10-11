@@ -1,13 +1,13 @@
 <!-- Carousel wrapper -->
-<div id="carouselBasicExample" class="carousel slide carousel-fade" data-mdb-ride="carousel" data-mdb-interval="{{sections.settings.enable_auto_slide}}"   >
+<div id="carouselBasicExample" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="{{sections.settings.enable_auto_slide}}"   >
   <!-- Indicators -->
   <div class="carousel-indicators">
     {% if section.blocks.size > 0 %}
       {% for block in section.blocks %}
     <button
       type="button"
-      data-mdb-target="#carouselBasicExample"
-      data-mdb-slide-to="{{foorloop.index0}}"
+      data-bs-target="#carouselBasicExample"
+      data-bs-slide-to="{{foorloop.index0}}"
       {% if forloop.index==1 %}
       class="active"
       aria-current="true"  
@@ -26,7 +26,7 @@
   <!-- Inner -->
   <div class="carousel-inner">
    {% for block in section.blocks  %}  
-   <div class="carousel-item {% if forloop.index==1 %}active{%endif %}" data-mdb-interval="4000">
+   <div class="carousel-item {% if forloop.index==1 %}active{%endif %}" data-bs-interval="4000">
       {% if block.settings.slider_img !=null %}
         <img class="d-block w-100" src="{{block.settings.slider_img | img_url:'original'}}" alt="{{block.settings.slider_img.alt}}">
       {% endif %}
@@ -49,11 +49,11 @@
 
   <!-- Controls -->
   {% if section.blocks.size > 1 and section.settings.show_prev_next %}
-    <button class="carousel-control-prev" type="button" data-mdb-target="#carouselBasicExample" data-mdb-slide="prev">
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselBasicExample" data-bs-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Previous</span>
   </button>
-  <button class="carousel-control-next" type="button" data-mdb-target="#carouselBasicExample" data-mdb-slide="next">
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselBasicExample" data-bs-slide="next">
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Next</span>
   </button>
