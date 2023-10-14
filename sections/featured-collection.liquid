@@ -5,15 +5,15 @@
     <h2 >{{section.settings.title}} </h2>
   </div>
   <div class="row">
-    {% for produt in section.product %}
-    <div class="col-md-4">
+    {% for product in collection.products %}
+    <div class="col-md-4">   
       <div class="card m-2 ">
-        <img src="{{product.featured_image | img_url:'medium' }}" alt="{{product.title}}">
+        <img src="{{product.featured_image|img_url:'medium'}}" alt="{{product.title}}">
         <div class="product-info">
           <h4 class="product-title">
             {{product.title | escape}}
           </h4>
-          <strong class="price">{{product.price  | money_with_currency}}</strong>
+          <strong class="price">{{product.price | money_with_currency}}</strong>
         </div>
         <button class="btn btn-primary">Add to cart</button>
       </div>
@@ -26,9 +26,11 @@
 {% schema %}
 {
   "name": "Featured collection",
-  "settings": [{
+  "settings": [
+    {
     "type": "text",
     "id": "title",
+    "label": "Section title ",
     "default": "Featured Collection"
   },
     {
