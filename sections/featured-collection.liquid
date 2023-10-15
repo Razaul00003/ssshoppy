@@ -1,38 +1,38 @@
 {% assign collection = section.settings.collection %}
 <div class="featured-product-section">
-<div class="container ">
-  <div class="section-heading">
-    {% if section.settings.title!=blank %}
-      <h2 >{{section.settings.title}}({{collection.all_products_count}}) </h2>
+  <div class="container">
+    <div class="section-heading">
+      {% if section.settings.title != blank %}
+        <h2>{{ section.settings.title }} ({{ collection.all_products_count }})</h2>
       {% else %}
-      <h2 >{{collection.title}} ({{collection.all_products_count}})</h2>
+        <h2>{{ section.settings.collection.title }} ({{ collection.all_products_count }})</h2>
+      {% endif %}
+    </div>
+    <div class="row">
+      {% for product in collection.products limit: section.settings.limit %}
+        <div class="col-md-4">
+          <div class="card m-2">
+            <img src="{{ product.featured_image | img_url: 'medium' }}" class="{% if product.images.size > 1 %}featured-image{% endif %}" alt="{{ product.title }}">
+            {% if product.images.size > 1 %}
+              <img src="{{ product.images[1] | img_url: 'medium' }}" class="second-image" alt="{{ product.title }}">
+            {% endif %}
+            <div class="product-info">
+              <h4 class="product-title">
+                {{ product.title | escape }}
+              </h4>
+              <strong class="price">{{ product.price | money_with_currency }}</strong>
+            </div>
+            <button class="btn btn-primary">Add to cart</button>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    {% if collection.all_products_count > section.settings.limit %}
+      <div class="more-products text-center">
+        <a href="{{ collection.url }}" class="btn btn-secondary">Load More</a>
+      </div>
     {% endif %}
   </div>
-  <div class="row">
-    {% for product in collection.products | limit: section.settings.limit %}
-    <div class="col-md-4">   
-      <div class="card m-2 ">
-    <img src="{{product.featured_image|img_url:'medium'}}" class="{% if product.images.size>1 %} featured-image {%endif %}" alt="{{product.title}}">
-        {% if product.images.size>1 %}
-          <img src="{{product.images[1] |img_url:'medium'}}"  class="second-image" alt="{{product.title}}">
-        {% endif %}
-        <div class="product-info">
-          <h4 class="product-title">
-            {{product.title | escape}}
-          </h4>
-          <strong class="price">{{product.price | money_with_currency}}</strong>
-        </div>
-        <button class="btn btn-primary">Add to cart</button>
-      </div>
-    </div>  
-    {% endfor %}
-  </div>
-  {% if collection.all_products_count > section.settings.limit %}
-  <div class="more-products text-center">
-    <a href="{{collection.url}}" class="btn btn-secondary">Load More</a>
-  </div>    
-  {% endif %}
-</div>
 </div>
 
 {% schema %}
@@ -40,29 +40,31 @@
   "name": "Featured collection",
   "settings": [
     {
-    "type": "text",
-    "id": "title",
-    "label": "Section title ",
-    "default": "Featured Collection"
-  },
-    {
-      "type":"collection" ,
-      "id":"collection",
-      "label":"Collection"
+      "type": "text",
+      "id": "title",
+      "label": "Section title",
+      "default": "Featured Collection"
     },
     {
-      "type":"range" ,
-      "min":2,
-      "max":12,
-      "step":1,  
-      "id":"limit",
-      "label":"Product limits",
-      "default":6
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "id": "limit",
+      "label": "Product limits",
+      "default": 6
     }
-    ], "presets": [  
-      {"name": "Featured  collection",
-      "category":"collection"
+  ],
+  "presets": [
+    {
+      "name": "Featured collection",
+      "category": "collection"
     }
-    ]
+  ]
 }
 {% endschema %}
