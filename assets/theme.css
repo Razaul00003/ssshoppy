@@ -104,3 +104,8 @@ span.compare-price {
 .add_to_cart:focus {
   box-shadow: none;
 }
+
+.footer ul li a {
+  text-decoration: none;
+  color: #000000;
+}
