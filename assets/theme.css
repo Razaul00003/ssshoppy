@@ -53,6 +53,10 @@ span.compare-price {
 .brand {
   font-size: 13px;
 }
+span .compare-price {
+  text-decoration: none;
+  color: #eee;
+}
 .act-price {
   color: red;
   font-weight: 700;
