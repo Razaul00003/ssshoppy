@@ -1,0 +1,118 @@
+<div class="cart-page" id="{{section.id}}">
+    <div class="cart-heading bg-dark mb-4 p-4">
+        <div class="header d-flex align-items-center justify-content-center">
+            <h3 class="text-light">Your cart</h3>
+        </div>
+    </div>
+    <div class="container">
+        {% unless cart.empty %}            
+        <form action="{{routes.cart_url}}" method="post" id="cart" >
+            <div class="row">
+                <div class="col-md-9"> 
+                    <div class="cart-table">
+                        <table class="table table-responsive">
+                            <thead>
+                                <tr>
+                                    <th>Product info</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Final Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for line_item in cart.items %}
+                                    
+                                    <tr>
+                                        <td>
+                                           <div class="item-content d-flex">
+                                            <div class="item-image px-2">
+                                                {% if line_item.image != empty %}
+                                                    <img src="{{line_item.image |  image_url: width:300}}" width="100" height="auto" alt="">
+                                                {% endif %}
+                                            </div>
+                                            <div class="content">
+                                                <p class="title mb-1">{{line_item.product.title | link_to: line_item.url}}</p>
+                                                <div class="price">
+                                                    <span>{{line_item.original_price |  money_with_currency}}</span>
+                                                </div>
+                                                {% if line_item.product.has_only_default_variant == false or line_item.properties.size != 0 or  line_item.selling_plan_allocation !=null%}
+                                                    {% if line_item.proudct.has_only_default_variant ==false %}
+                                                        <div class="item-options">
+                                                            {% for option in line_item.options_with_values %}
+                                                                <span>{{option.name |  escape}}: {{option.value}}</span><br>
+                                                            {% endfor %}
+                                                        </div>    
+                                                    {% endif %}
+                                                    {% if line_item.selling_plan_allocation !=null %}
+                                                        <div class="selling-plan">
+                                                            <span>Selling plan: {{line_item.selling_plan_allocation.selling_plan.name}}</span>
+                                                         </div>
+                                                    {% endif %}
+                                                    
+                                                {% endif %}
+                                            </div>
+                                           </div> 
+                                        </td>
+                                        <td>
+                                            <div class="price-wrapper">
+                                                {% if line_item.original_price != line_item.final_price %}
+                                                    <del>{{line_item.original_price |money}}</del><br>
+                                                    <span class="sale-price">{{line_item.final_line_price |  money}}</span>
+                                                    {% else %}
+                                                        <span class="original-price">{{line_item.original_price | money}}</span>
+                                                {% endif %}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="quantity-area">
+                                                
+                                            </div>
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="checkout-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="card-info d-flex justify-content-between">
+                                    <strong>Subtotal:</strong>
+                                    <strong class="cart-subtotal">{{cart.total_price |  money_with_currency}}</strong>
+                                </div>
+                                <hr class="my-3">
+                                <div class="cart-note">
+                                    <label for="note">Note:</label>
+                                    <textarea name="form-control" id="note" placeholder="Note">{{cart.note}}</textarea>
+                                </div>
+                                <div class="cart-actions">
+                                    <button type="submit" name="update" class="btn btn-primary w-100 my-2">Update</button>
+                                    <button type="submit" name="checkout" class="btn btn-secondary w-100">
+                                        Checkout
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        {% else %}
+            <div class="text-center">
+                <p>Your cart is empty</p>
+            </div>
+    {% endunless %}
+    </div>
+</div>
+
+{% schema %}
+{
+    "name": "Cart Template",
+    "settings": [
+        {}
+        ]
+}
+{% endschema %}

@@ -25,7 +25,7 @@
                   <i class="fa fa-long-arrow-left"></i> <span class="ml-1">Back</span>
                 </div>
               </div>
-              {%- form 'product', product, id: product_form_id -%}
+            {%- form 'product', product, id: product_form_id -%}
                 <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
                 {% for block in section.blocks %}
                   {% case block.type %}
